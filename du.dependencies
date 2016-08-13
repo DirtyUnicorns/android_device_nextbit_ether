@@ -1,11 +1,13 @@
 [
   {
-    "repository":  "android_kernel_nextbit_msm8992",
+    "repository":  "DirtyUnicorns/android_kernel_nextbit_msm8992",
     "target_path": "kernel/nextbit/msm8992"
+    "branch":      "m-caf"
   },
   {
-    "repository":  "android_vendor_nextbit",
+    "repository":  "DirtyUnicorns/android_vendor_nextbit",
     "target_path": "vendor/nextbit"
+    "branch":      "m-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_external_libnetfilter_conntrack",
@@ -41,10 +43,10 @@
    "repository" : "DirtyUnicorns/android_vendor_qcom_opensource_dataservices",
    "target_path": "vendor/qcom/opensource/dataservices",
    "branch"     : "m-caf"
- },
- {
+  },
+  {
    "repository" : "DirtyUnicorns/android_system_qcom",
    "target_path": "system/qcom",
    "branch"     : "m-caf"
- }
+  }
 ]
