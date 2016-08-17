@@ -468,3 +468,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Time services
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.timed.enable=true
+
+# For android_filesystem_config.h
+PRODUCT_PACKAGES += \
+    fs_config_files

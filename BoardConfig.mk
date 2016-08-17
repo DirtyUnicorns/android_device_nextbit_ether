@@ -173,5 +173,8 @@ include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += \
     $(DEVICE_PATH)/sepolicy
 
+# Filesystem
+TARGET_ANDROID_FILESYSTEM_CONFIG_H := $(DEVICE_PATH)/android_filesystem_config.h
+
 # Enable workaround for slow rom flash
 BOARD_SUPPRESS_SECURE_ERASE := true
