@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2015-2016 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,20 +25,35 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 DEVICE_PACKAGE_OVERLAYS := \
     $(LOCAL_PATH)/overlay
 
-PRODUCT_PACKAGES += \
-    init.nbq.charger.rc \
-    init.nbq.fingerprint.rc \
-    init.nbq.led.rc \
-    init.nbq.mac.sh \
-    init.nbq.nfc.rc \
-    init.nbq.poweroff_charging.rc \
-    init.nbq.smartamp.rc \
-    init.nbq.target.rc \
-    init.nbq.usb.rc \
-    init.qcom.fs.rc \
-    init.qcom.rc \
-    init.qcom.sh \
-    init.target.rc
+# setup dalvik vm configs.
+$(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-dalvik-heap.mk)
+
+# setup base hwui configs
+$(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-hwui-memory.mk)
+
+# Init
+PRODUCT_COPY_FILES += \
+    device/nextbit/ether/rootdir/fstab.qcom:root/fstab.qcom \
+    device/nextbit/ether/rootdir/init.nbq.charger.rc:root/init.nbq.charger.rc \
+    device/nextbit/ether/rootdir/init.nbq.fingerprint.rc:root/init.nbq.fingerprint.rc \
+    device/nextbit/ether/rootdir/init.nbq.led.rc:root/init.nbq.led.rc \
+    device/nextbit/ether/rootdir/init.nbq.nfc.rc:root/init.nbq.nfc.rc \
+    device/nextbit/ether/rootdir/init.nbq.poweroff_charging.rc:root/init.nbq.poweroff_charging.rc \
+    device/nextbit/ether/rootdir/init.nbq.smartamp.rc:root/init.nbq.smartamp.rc \
+    device/nextbit/ether/rootdir/init.nbq.target.rc:root/init.nbq.target.rc \
+    device/nextbit/ether/rootdir/init.nbq.usb.rc:root/init.nbq.usb.rc \
+    device/nextbit/ether/rootdir/init.qcom.fs.rc:root/init.qcom.fs.rc \
+    device/nextbit/ether/rootdir/init.qcom.rc:root/init.qcom.rc \
+    device/nextbit/ether/rootdir/init.qcom.sh:root/init.qcom.sh \
+    device/nextbit/ether/rootdir/init.target.rc:root/init.target.rc \
+    device/nextbit/ether/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
+
+PRODUCT_COPY_FILES += \
+    device/nextbit/ether/rootdir/bin/init.nbq.mac.sh:system/bin/init.nbq.mac.sh \
+    device/nextbit/ether/rootdir/bin/init.nbq.power.sh:system/bin/init.nbq.power.sh
+
+PRODUCT_COPY_FILES += \
+    device/nextbit/ether/rootdir/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -224,11 +239,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
 
-PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.qcom.rc \
-    ueventd.qcom.rc
-
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
@@ -239,11 +249,55 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    init.nbq.power.sh \
     power.msm8992
 
+# Audio calibration database
+ACDB_TARGET ?= NBQ
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/acdbdata/$(ACDB_TARGET)_Bluetooth_cal.acdb:system/etc/acdbdata/$(ACDB_TARGET)/$(ACDB_TARGET)_Bluetooth_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/$(ACDB_TARGET)_General_cal.acdb:system/etc/acdbdata/$(ACDB_TARGET)/$(ACDB_TARGET)_General_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/$(ACDB_TARGET)_Global_cal.acdb:system/etc/acdbdata/$(ACDB_TARGET)/$(ACDB_TARGET)_Global_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/$(ACDB_TARGET)_Handset_cal.acdb:system/etc/acdbdata/$(ACDB_TARGET)/$(ACDB_TARGET)_Handset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/$(ACDB_TARGET)_Hdmi_cal.acdb:system/etc/acdbdata/$(ACDB_TARGET)/$(ACDB_TARGET)_Hdmi_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/$(ACDB_TARGET)_Headset_cal.acdb:system/etc/acdbdata/$(ACDB_TARGET)/$(ACDB_TARGET)_Headset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdbdata/$(ACDB_TARGET)_Speaker_cal.acdb:system/etc/acdbdata/$(ACDB_TARGET)/$(ACDB_TARGET)_Speaker_cal.acdb
+
 PRODUCT_PACKAGES += \
-    init.qcom.bt.sh
+    audiod \
+    libqcompostprocbundle \
+    libqcomvisualizer \
+    libqcomvoiceprocessingdescriptors \
+    libqcomvoiceprocessing
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/listen_platform_info.xml:system/etc/listen_platform_info.xml \
+    $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
+    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml \
+
+# speaker protection
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.speaker.prot.enable=false \
+    persist.spkr.cal.duration=0
+
+# surround sound recording
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.qc.sdk.audio.ssr=false \
+    persist.audio.ssr.3mic=false
+
+# offload settings
+PRODUCT_PROPERTY_OVERRIDES += \
+    audio.offload.gapless.enabled=true \
+    audio.offload.buffer.size.kb=32 \
+    audio.offload.video=true \
+    audio.offload.pcm.16bit.enable=true \
+    audio.offload.pcm.24bit.enable=true \
+    audio.offload.multiple.enabled=false \
+    audio.deep_buffer.media=true
+
+# voip
+PRODUCT_PROPERTY_OVERRIDES += \
+    use.voice.path.for.pcm.voip=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     bluetooth.enable_timeout_ms=12000 \
@@ -299,12 +353,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     gps.msm8992
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/gps/etc/flp.conf:system/etc/flp.conf \
-    $(LOCAL_PATH)/gps/etc/gps.conf:system/etc/gps.conf \
-    $(LOCAL_PATH)/gps/etc/izat.conf:system/etc/izat.conf \
-    $(LOCAL_PATH)/gps/etc/sap.conf:system/etc/sap.conf
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.gps.qc_nlp_in_use=0 \
