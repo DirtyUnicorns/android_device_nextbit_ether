@@ -2,51 +2,51 @@
   {
     "repository":  "DirtyUnicorns/android_kernel_nextbit_msm8992",
     "target_path": "kernel/nextbit/msm8992",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_vendor_nextbit",
     "target_path": "vendor/nextbit",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_external_libnetfilter_conntrack",
     "target_path": "external/libnetfilter_conntrack",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_external_libnfnetlink",
     "target_path": "external/libnfnetlink",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_external_connectivity",
     "target_path": "external/connectivity",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_external_ant-wireless_ant_service",
     "target_path": "external/ant-wireless/ant_service",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_external_ant-wireless_antradio-library",
     "target_path": "external/ant-wireless/antradio-library",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
     "repository":  "DirtyUnicorns/android_external_ant-wireless_ant_native",
     "target_path": "external/ant-wireless/ant_native",
-    "branch":      "m-caf"
+    "branch":      "n-caf"
   },
   {
    "repository" : "DirtyUnicorns/android_vendor_qcom_opensource_dataservices",
    "target_path": "vendor/qcom/opensource/dataservices",
-   "branch"     : "m-caf"
+   "branch"     : "n-caf"
   },
   {
    "repository" : "DirtyUnicorns/android_system_qcom",
    "target_path": "system/qcom",
-   "branch"     : "m-caf"
+   "branch"     : "n-caf"
   }
 ]

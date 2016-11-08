@@ -1,5 +1,5 @@
 #
-# Copyright 2015 The Android Open Source Project
+# Copyright 2015-2016 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,5 +31,5 @@ PRODUCT_MODEL := Robin
 PRODUCT_MANUFACTURER := Nextbit
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BUILD_FINGERPRINT=Nextbit/ether/ether:6.0.1/MMB29M/00WW_1_350:user/release-keys \
-    PRIVATE_BUILD_DESC="ether-user 6.0.1 MMB29M 00WW_1_350 release-keys"
+    BUILD_FINGERPRINT=Nextbit/ether/ether:6.0.1/MMB29M/00WW_1_450:user/release-keys \
+    PRIVATE_BUILD_DESC="ether-user 6.0.1 MMB29M 00WW_1_450 release-keys"
