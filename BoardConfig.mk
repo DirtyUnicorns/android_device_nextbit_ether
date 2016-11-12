@@ -54,7 +54,7 @@ TARGET_KERNEL_CONFIG := ether_defconfig
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_ARCH := arm64
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 boot_cpus=0-5
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 boot_cpus=0-5 androidboot.selinux=permissive
 #BOARD_KERNEL_CMDLINE += zcache.enabled=1 zcache.compressor=lz4
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_APPEND_DTB := true
@@ -153,9 +153,12 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/fstab.qcom
 USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_HAVE_PREBUILT_CAMERA := true
 
-# GPS and Location
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := msm8992
-BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
+ # GPS and Location
+USE_DEVICE_SPECIFIC_GPS := true
+USE_DEVICE_SPECIFIC_LOC_API := true
+TARGET_NO_RPC := true
+#BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := msm8992
+#BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 
 # CNE and DPM
 TARGET_LDPRELOAD := libNimsWrap.so
@@ -200,14 +203,6 @@ PROTOBUF_SUPPORTED := true
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
-
-# CM Hardware
-#BOARD_USES_CYANOGEN_HARDWARE := true
-#BOARD_HARDWARE_CLASS += \
-#    hardware/cyanogen/cmhw
-
-# Clang
-#USE_CLANG_PLATFORM_BUILD := true
 
 -include vendor/nextbit/ether/BoardConfigVendor.mk
 
