@@ -1,5 +1,5 @@
 #
-# Copyright 2015 The Android Open Source Project
+# Copyright 2015-2017 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,5 +15,5 @@
 #
 
 PRODUCT_MAKEFILES := \
-    device/nextbit/ether/omni_ether.mk
+    $(LOCAL_DIR)/du.mk
 

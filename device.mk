@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2015-2017 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/nextbit/ether/rootdir/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh
 
-
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
@@ -87,13 +86,16 @@ PRODUCT_PACKAGES += \
 
 # routes, paths, effects, policy
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/audio/audio_output_policy.conf:system/vendor/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml \
     $(LOCAL_PATH)/audio/audio_platform_info_i2s.xml:system/etc/audio_platform_info_i2s \
     $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
+    $(LOCAL_PATH)/audio/listen_platform_info.xml:system/etc/listen_platform_info.xml \
     $(LOCAL_PATH)/audio/mixer_paths.xml:system/etc/mixer_paths.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_i2s.xml:system/etc/mixer_paths_i2s.xml
-
+    $(LOCAL_PATH)/audio/mixer_paths_i2s.xml:system/etc/mixer_paths_i2s.xml \
+    $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
+    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml
 
 # features
 PRODUCT_COPY_FILES += \
@@ -104,6 +106,11 @@ PRODUCT_COPY_FILES += \
 # custom acdb path
 PRODUCT_PROPERTY_OVERRIDES += \
     audio.acdb.name=NBQ
+
+# fast track settings
+PRODUCT_PROPERTY_OVERRIDES += \
+    af.fast_track_multiplier=1 \
+    audio_hal.period_size=192
 
 # fluence multi-mic solution
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -135,21 +142,21 @@ PRODUCT_COPY_FILES += \
 
 # Display density
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=420
+    ro.sf.lcd_density=480
 
 PRODUCT_PACKAGES += fingerprintd
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.frp.pst=/dev/block/bootdevice/by-name/config
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.frp.pst=/dev/block/bootdevice/by-name/config
 
 # Lights
 PRODUCT_PACKAGES += \
     lights.msm8992
 
-# Input device files for ether
+# Input device files for Ether
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
 
@@ -204,19 +211,22 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     audiod \
-    libqcomvoiceprocessingdescriptors
+    libqcompostprocbundle \
+    libqcomvisualizer \
+    libqcomvoiceprocessingdescriptors \
+    libqcomvoiceprocessing
 
-# speaker protection
+# Speaker protection
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.speaker.prot.enable=false \
     persist.spkr.cal.duration=0
 
-# surround sound recording
+# Surround sound recording
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.qc.sdk.audio.ssr=false \
     persist.audio.ssr.3mic=false
 
-# offload settings
+# Offload settings
 PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.gapless.enabled=true \
     audio.offload.buffer.size.kb=32 \
@@ -226,7 +236,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.multiple.enabled=false \
     audio.deep_buffer.media=true
 
-# voip
+# VoIP
 PRODUCT_PROPERTY_OVERRIDES += \
     use.voice.path.for.pcm.voip=true
 
@@ -255,7 +265,7 @@ PRODUCT_PACKAGES += \
     liboverlay \
     libqdutils \
     libqdMetaData \
-    memtrack.msm8992 \
+    memtrack.msm8992
 
 # QC CABL feature
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -349,7 +359,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libprotobuf-cpp-full
 
-# property for vendor specific library
+# Property for vendor specific library
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so \
     ro.vendor.at_library=libqti-at.so \
@@ -421,13 +431,26 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml
 
-# Enable Wifi calling
+# Enable WiFi Calling
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.iwlan.enable=true
 
 PRODUCT_PACKAGES += \
     power.ether
 
-PRODUCT_PACKAGES += SnapdragonCamera
+# Enable camera EIS
+# eis.enable: enables electronic image stabilization
+# is_type: sets image stabilization type
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.camera.eis.enable=1 \
+    persist.camera.is_type=4
 
-PRODUCT_PACKAGES += RobinParts
+# DU Updater
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.du.updater=ether
+
+# Set default USB configuration
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    sys.usb.config=mtp,adb \
+    persist.sys.usb.config=mtp,adb \
+    ro.adb.secure=0
