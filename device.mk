@@ -176,7 +176,7 @@ PRODUCT_COPY_FILES += \
 # NFC packages
 PRODUCT_PACKAGES += \
     com.android.nfc_extras \
-    nfc_nci.qcom \
+    nfc_nci.pn54x.default \
     NfcNci \
     Tag
 
