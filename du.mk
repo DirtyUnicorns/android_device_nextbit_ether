@@ -36,5 +36,5 @@ PRODUCT_PACKAGES += \
     Launcher3
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BUILD_FINGERPRINT="Nextbit/NBQ_00WW_FIH/NBQ_BSP:7.0/Robin_Nougat_57_u/00WW_Jenkins_57:user/test-keys" \
-    PRIVATE_BUILD_DESC="NBQ_00WW_FIH-user 7.0 Robin_Nougat_57_u 00WW_Jenkins_57 test-keys"
+    BUILD_FINGERPRINT="Nextbit/NBQ_00WW_FIH/NBQ_BSP:7.1.1/Robin_Nougat_85_u/00WW_Jenkins_85:user/test-keys" \
+    PRIVATE_BUILD_DESC="NBQ_00WW_FIH-user 7.1.1 Robin_Nougat_85_u 00WW_Jenkins_85 test-keys"

@@ -25,10 +25,8 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 DEVICE_PACKAGE_OVERLAYS := \
     $(LOCAL_PATH)/overlay
 
-# setup dalvik vm configs.
+# setup dalvik vm and hwui configs.
 $(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-dalvik-heap.mk)
-
-# setup base hwui configs
 $(call inherit-product, frameworks/native/build/phone-xxxhdpi-3072-hwui-memory.mk)
 
 # Init
@@ -77,42 +75,48 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     audio_amplifier.msm8992
 
-# some extra tools
+# Some extra tools
 PRODUCT_PACKAGES += \
     tinycap \
     tinymix \
     tinypcminfo \
     tinyplay
 
-# routes, paths, effects, policy
+# Routes, paths, effects, policy
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/audio/audio_output_policy.conf:system/vendor/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml \
-    $(LOCAL_PATH)/audio/audio_platform_info_i2s.xml:system/etc/audio_platform_info_i2s \
+    $(LOCAL_PATH)/audio/audio_platform_info_i2s.xml:system/etc/audio_platform_info_i2s.xml \
     $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/audio/listen_platform_info.xml:system/etc/listen_platform_info.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/mixer_paths.xml:system/etc/mixer_paths.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_i2s.xml:system/etc/mixer_paths_i2s.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
     $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml
 
-# features
+PRODUCT_COPY_FILES += \
+    frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:/system/etc/a2dp_audio_policy_configuration.xml \
+    frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:/system/etc/audio_policy_volumes.xml \
+    frameworks/av/services/audiopolicy/config/default_volume_tables.xml:/system/etc/default_volume_tables.xml \
+    frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:/system/etc/r_submix_audio_policy_configuration.xml \
+    frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:/system/etc/usb_audio_policy_configuration.xml
+
+# Features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml  \
     frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml
 
-# custom acdb path
+# Custom acdb path
 PRODUCT_PROPERTY_OVERRIDES += \
     audio.acdb.name=NBQ
 
-# fast track settings
+# Fast track settings
 PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
     audio_hal.period_size=192
 
-# fluence multi-mic solution
+# Fluence multi-mic solution
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.qc.sdk.audio.fluencetype=fluence \
     persist.audio.fluence.audiorec=false \
@@ -121,11 +125,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.fluence.speaker=true \
     persist.audio.fluence.mode=broadside
 
-# stereo camcorder
+# Stereo camcorder
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.camcorder.stereo=true
 
-# low audio flinger standby delay to reduce power consumption
+# Low audio flinger standby delay to reduce power consumption
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.audio.flinger_standbytime_ms=300
 
@@ -144,13 +148,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=480
 
-PRODUCT_PACKAGES += fingerprintd
+# Fingerprint
+PRODUCT_PACKAGES += \
+    fingerprintd
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml
-
-#PRODUCT_PROPERTY_OVERRIDES += \
-#    ro.frp.pst=/dev/block/bootdevice/by-name/config
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -292,6 +295,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml
 
+# Location services
 PRODUCT_PACKAGES += \
     gps.msm8992
 
@@ -337,10 +341,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:system/etc/msm_irqbalance.conf
 
-PRODUCT_PACKAGES += \
-    libtinyxml
-
-# try not to use big cores during dexopt
+# Try not to use big cores during dexopt
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.boot-dex2oat-threads=4 \
     dalvik.vm.dex2oat-threads=2 \
@@ -352,12 +353,11 @@ PRODUCT_PACKAGES += \
     libbson \
     libcnefeatureconfig \
     libnl_2 \
+    libprotobuf-cpp-full \
     libqsap_sdk \
     librmnetctl \
+    libtinyxml \
     libxml2
-
-PRODUCT_PACKAGES += \
-    libprotobuf-cpp-full
 
 # Property for vendor specific library
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -384,9 +384,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.sensors.gestures=true
+PRODUCT_PACKAGES += telephony-ext
+PRODUCT_BOOT_JARS += telephony-ext
 
+# WiFi, Bluetooth, and Sensors
 PRODUCT_PACKAGES += \
     dhcpcd.conf \
     hostapd \
@@ -419,6 +420,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bluetooth.emb_wp_mode=true \
     ro.bluetooth.wipower=true
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.qc.sdk.sensors.gestures=true
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
@@ -454,3 +458,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     sys.usb.config=mtp,adb \
     persist.sys.usb.config=mtp,adb \
     ro.adb.secure=0
+
+# DRM
+PRODUCT_PROPERTY_OVERRIDES += \
+    drm.service.enabled=true \
+    ro.com.widevine.cachesize=16777216
