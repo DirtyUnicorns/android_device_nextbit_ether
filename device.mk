@@ -53,6 +53,34 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/nextbit/ether/rootdir/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh
 
+# Permissions
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
+    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
+    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+    frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.camera.full.xml:system/etc/permissions/android.hardware.camera.full.xml \
+    frameworks/native/data/etc/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml \
+    frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml \
+    frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml \
+    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
+    frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
+    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
+    frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:system/etc/permissions/android.hardware.sensor.stepcounter.xml \
+    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:system/etc/permissions/android.hardware.sensor.stepdetector.xml \
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+    frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
+    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
+    frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+    frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml  \
+    frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
+
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
@@ -80,7 +108,8 @@ PRODUCT_PACKAGES += \
     tinycap \
     tinymix \
     tinypcminfo \
-    tinyplay
+    tinyplay \
+    libtinyxml
 
 # Routes, paths, effects, policy
 PRODUCT_COPY_FILES += \
@@ -98,65 +127,25 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/configs/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
+
+PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:/system/etc/a2dp_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:/system/etc/audio_policy_volumes.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:/system/etc/default_volume_tables.xml \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:/system/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:/system/etc/usb_audio_policy_configuration.xml
 
-# Features
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
-    frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml  \
-    frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml
-
-# Custom acdb path
-PRODUCT_PROPERTY_OVERRIDES += \
-    audio.acdb.name=NBQ
-
-# Fast track settings
-PRODUCT_PROPERTY_OVERRIDES += \
-    af.fast_track_multiplier=1 \
-    audio_hal.period_size=192
-
-# Fluence multi-mic solution
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.audio.fluencetype=fluence \
-    persist.audio.fluence.audiorec=false \
-    persist.audio.fluence.voicecall=true \
-    persist.audio.fluence.voicerec=false \
-    persist.audio.fluence.speaker=true \
-    persist.audio.fluence.mode=broadside
-
-# Stereo camcorder
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.audio.camcorder.stereo=true
-
-# Low audio flinger standby delay to reduce power consumption
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.audio.flinger_standbytime_ms=300
-
-# Camera2 API
-PRODUCT_PROPERTY_OVERRIDES += \
-    media.camera.ts.monotonic=0 \
-    persist.camera.HAL3.enabled=1
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-    frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
-    frameworks/native/data/etc/android.hardware.camera.full.xml:system/etc/permissions/android.hardware.camera.full.xml \
-    frameworks/native/data/etc/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml
-
-# Display density
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=480
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 # Fingerprint
 PRODUCT_PACKAGES += \
     fingerprintd
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -165,19 +154,6 @@ PRODUCT_PACKAGES += \
 # Input device files for Ether
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
-
-PRODUCT_COPY_FILES += \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
 
 # NFC packages
 PRODUCT_PACKAGES += \
@@ -190,14 +166,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
     $(LOCAL_PATH)/nfc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf \
     $(LOCAL_PATH)/nfc/nfcee_access.xml:system/etc/nfcee_access.xml
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
-
-# These are the hardware-specific features
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -222,47 +190,6 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessingdescriptors \
     libqcomvoiceprocessing
 
-# Speaker protection
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.speaker.prot.enable=false \
-    persist.spkr.cal.duration=0
-
-# Surround sound recording
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.audio.ssr=false \
-    persist.audio.ssr.3mic=false
-
-# Offload settings
-PRODUCT_PROPERTY_OVERRIDES += \
-    audio.offload.gapless.enabled=true \
-    audio.offload.buffer.size.kb=32 \
-    audio.offload.video=true \
-    audio.offload.pcm.16bit.enable=true \
-    audio.offload.pcm.24bit.enable=true \
-    audio.offload.multiple.enabled=false \
-    audio.deep_buffer.media=true
-
-# VoIP
-PRODUCT_PROPERTY_OVERRIDES += \
-    use.voice.path.for.pcm.voip=true
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    bluetooth.enable_timeout_ms=12000 \
-    bluetooth.hfp.client=1 \
-    qcom.bluetooth.soc=rome
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.camera.cpp.duplication=false \
-    ro.qc.sdk.camera.facialproc=false \
-    ro.qc.sdk.gestures.camera=false
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.cne.feature=1 \
-    persist.env.fastdorm.enabled=true
-
 # Display HAL
 PRODUCT_PACKAGES += \
     copybit.msm8992 \
@@ -273,31 +200,6 @@ PRODUCT_PACKAGES += \
     libqdMetaData \
     memtrack.msm8992
 
-# QC CABL feature
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.cabl=2
-
-# MSM8992 HAL settings
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.composition.type=c2d \
-    debug.egl.hw=1 \
-    debug.mdpcomp.logs=0 \
-    debug.sf.hw=1 \
-    persist.debug.wfd.enable=1 \
-    persist.demo.hdmirotationlock=false \
-    persist.hwc.enable_vds=1 \
-    persist.hwc.mdpcomp.enable=true \
-    persist.hwc.ptor.enable=true \
-    persist.mdpcomp.4k2kSplit=1 \
-    persist.mdpcomp_perfhint=50 \
-    persist.metadata_dynfps.disable=true \
-    persist.sys.wfd.virtual=0 \
-    ro.opengles.version=196609
-
-# OpenGLES Android Extension
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml
-
 # Location services
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/flp.conf:system/etc/flp.conf \
@@ -306,13 +208,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sap.conf:system/etc/sap.conf \
     $(LOCAL_PATH)/configs/lowi.conf:system/etc/lowi.conf \
     $(LOCAL_PATH)/configs/xtwifi.conf:system/etc/xtwifi.conf
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.gps.qc_nlp_in_use=0 \
-    ro.gps.agps_provider=1
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml
 
 PRODUCT_PACKAGES += \
     ipacm \
@@ -329,24 +224,11 @@ PRODUCT_PACKAGES += \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
     libOmxVdec \
-    libOmxVenc \
-    libstagefrighthw
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    mm.enable.smoothstreaming=true \
-    media.aac_51_output_enabled=true \
-    vidc.debug.level=1 \
-    vidc.enc.dcvs.extra-buff-count=2
+    libOmxVenc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:system/etc/msm_irqbalance.conf
-
-# Try not to use big cores during dexopt
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.boot-dex2oat-threads=4 \
-    dalvik.vm.dex2oat-threads=2 \
-    dalvik.vm.image-dex2oat-threads=4
 
 PRODUCT_PACKAGES += \
     ebtables \
@@ -357,33 +239,7 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full \
     libqsap_sdk \
     librmnetctl \
-    libtinyxml \
     libxml2
-
-# Property for vendor specific library
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.extension_library=libqti-perfd-client.so \
-    ro.vendor.at_library=libqti-at.so \
-    ro.vendor.gt_library=libqti-gt.so \
-    sys.games.gt.prof=0
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
-    ril.subscription.types=NV,RUIM
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.data.mode=concurrent \
-    persist.data.netmgrd.qos.enable=true \
-    persist.data.tcp_rst_drop=true \
-    persist.radio.apm_sim_not_pwdn=1 \
-    persist.radio.custom_ecc=1 \
-    persist.radio.sib16_support=1 \
-    ro.data.large_tcp_window_size=true \
-    ro.use_data_netmgrd=true \
-    ro.telephony.default_network=9
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
 PRODUCT_PACKAGES += telephony-ext
 PRODUCT_BOOT_JARS += telephony-ext
@@ -407,67 +263,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
 
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml
-
-PRODUCT_PACKAGES += \
-    a4wpservice \
-    android.wipower \
-    android.wipower.xml \
-    libwipower_jni \
-    wipowerservice
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.bluetooth.emb_wp_mode=true \
-    ro.bluetooth.wipower=true
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.sensors.gestures=true
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
-    frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:system/etc/permissions/android.hardware.sensor.stepcounter.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:system/etc/permissions/android.hardware.sensor.stepdetector.xml
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml
-
-# Enable WiFi Calling
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.data.iwlan.enable=true
-
 PRODUCT_PACKAGES += \
     power.ether
-
-# Enable camera EIS
-# eis.enable: enables electronic image stabilization
-# is_type: sets image stabilization type
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.camera.eis.enable=1 \
-    persist.camera.is_type=4
-
-# DU Updater
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.du.updater=ether
-
-# Set default USB configuration
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    sys.usb.config=mtp,adb \
-    persist.sys.usb.config=mtp,adb \
-    ro.adb.secure=0
-
-# DRM
-PRODUCT_PROPERTY_OVERRIDES += \
-    drm.service.enabled=true \
-    ro.com.widevine.cachesize=16777216
-
-# Time services
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.timed.enable=true
 
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
