@@ -464,3 +464,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true \
     ro.com.widevine.cachesize=16777216
+
+# Time services
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.timed.enable=true
