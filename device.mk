@@ -216,7 +216,6 @@ PRODUCT_PACKAGES += \
 
 # Media
 PRODUCT_PACKAGES += \
-    libstagefrighthw \
     libc2dcolorconvert \
     libdivxdrmdecrypt \
     libOmxAacEnc \
@@ -224,8 +223,13 @@ PRODUCT_PACKAGES += \
     libOmxCore \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
+    libOmxSwVencMpeg4 \
     libOmxVdec \
-    libOmxVenc
+    libOmxVdecHevc \
+    libOmxVenc \
+    libOmxVidcCommon \
+    libmm-omxcore \
+    libstagefrighthw
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config \
