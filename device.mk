@@ -186,9 +186,9 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     audiod \
+    libaudio-resampler \
     libqcompostprocbundle \
     libqcomvisualizer \
-    libqcomvoiceprocessingdescriptors \
     libqcomvoiceprocessing
 
 # Display HAL
