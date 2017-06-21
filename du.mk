@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2017 The Android Open Source Project
+# Copyright 2015-2017 The Dirty Unicorns Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,5 +36,5 @@ PRODUCT_PACKAGES += \
     Launcher3
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BUILD_FINGERPRINT="Nextbit/NBQ_00WW_FIH/NBQ_BSP:7.1.1/Robin_Nougat_85_u/00WW_Jenkins_85:user/test-keys" \
-    PRIVATE_BUILD_DESC="NBQ_00WW_FIH-user 7.1.1 Robin_Nougat_85_u 00WW_Jenkins_85 test-keys"
+    BUILD_FINGERPRINT=Nextbit/ether/ether:7.1.1/Robin_Nougat_108/00WW_Jenkins_108:user/release-keys \
+    PRIVATE_BUILD_DESC="ether-user 7.1.1 Robin_Nougat_108 00WW_Jenkins_108 release-keys"
